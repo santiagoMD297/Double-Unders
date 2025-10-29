@@ -12,11 +12,11 @@ class Item:
 
     def __eq__(self, other):
         #compare items by name and price
-        return self.name == other.name and self.price == other.price
+        return self.name == other and self.price == other
 
     def __lt__(self, other):
         #compare items by price (less than)
-        return self.price < other.price
+        return self.price < other
 
     def totalValue(self):
         #price times quantity
@@ -58,7 +58,7 @@ class Inventory:
 
     def __str__(self):
         #inventory contents
-        pass
+        return 
 
     def findItem(self, name):
         #find item by name
