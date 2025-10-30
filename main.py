@@ -12,7 +12,7 @@ class Item:
 
     def __eq__(self, other):
         #compare items by name and price
-        return self.name == other and self.price == other
+        return self.name == other.name and self.price == other.price
 
     def __lt__(self, other):
         #compare items by price (less than)
