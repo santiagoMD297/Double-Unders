@@ -31,12 +31,14 @@ class Toy:
 
 class ToyBox:
 
-    def __init__(self, toys: Optional[List[Toy]] = None):
-        self._toys: List[Toy] = list(toys) if toys else []
+    def __init__(self, toys):
+    if toys is None:
+        self._toys = []
+    else:
+        self._toys = list(toys)
 
-    # ---------- Non-dunder helpers ----------
     def add_toy(self, toy: Toy) -> None:
-        """Put a toy into the box."""
+        #Put a toy into the box.
         self._toys.append(toy)
 
     def remove_toy_by_name(self, name: str) -> bool:
@@ -50,14 +52,9 @@ class ToyBox:
                 return True
         return False
 
-    def find_most_fun(self) -> Optional[Toy]:
-        """Return the toy with the highest fun_level, or None if empty."""
-        if not self._toys:
-            return None
-        return max(self._toys, key=lambda t: t.fun_level)
 
     def total_fun(self) -> int:
-        """Add up all the fun levels of the toys."""
+        #Add up all the fun levels of the toys.
         return sum(t.fun_level for t in self._toys)
 
     def sort_by_fun(self, reverse: bool = False) -> None:
@@ -80,7 +77,7 @@ class ToyBox:
         self._toys[index] = toy
 
     def __str__(self) -> str:
-        """Pretty print the box and its toys."""
+        #Print the box and its toys.
         inside = ", ".join(str(t) for t in self._toys) if self._toys else "(empty)"
         return f"ToyBox[{inside}] (total_fun={self.total_fun()})"
 
