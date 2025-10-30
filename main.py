@@ -37,16 +37,15 @@ class ToyBox:
     else:
         self._toys = list(toys)
 
-    def add_toy(self, toy: Toy) -> None:
+    def add_toy(self, toy: Toy):
         #Put a toy into the box.
         self._toys.append(toy)
 
-    def remove_toy_by_name(self, name: str) -> bool:
-        """
-        Take out the first toy with this name. 
-        Returns True if something was removed, False otherwise.
-        """
-        for i, t in enumerate(self._toys):
+    def remove_toy_by_name(self, name: str) :
+        #Take out the first toy with this name. 
+        #Returns True if something was removed, False otherwise.
+        
+        for t in self._toys:
             if t.name == name:
                 del self._toys[i]
                 return True
@@ -57,53 +56,32 @@ class ToyBox:
         #Add up all the fun levels of the toys.
         return sum(t.fun_level for t in self._toys)
 
-    def sort_by_fun(self, reverse: bool = False) -> None:
-        """Sort the toys by fun_level (lowest to highest unless reverse=True)."""
-        self._toys.sort(reverse=reverse)
 
-    # ---------- Dunders ----------
-    def __len__(self) -> int:
-        """How many toys are inside? This lets len(box) work."""
+    def __len__(self):
+        #How many toys are inside? This lets len(box) work.
         return len(self._toys)
 
-    def __getitem__(self, index: int) -> Toy:
-        """Let us do box[index] to get a toy at that spot."""
+    def __getitem__(self, index: int):
+        #Let us do box[index] to get a toy at that spot.
         return self._toys[index]
 
-    def __setitem__(self, index: int, toy: Toy) -> None:
-        """Let us do box[index] = toy to replace a toy at that spot."""
-        if not isinstance(toy, Toy):
-            raise TypeError("You can only put Toy objects into a ToyBox.")
+    def __setitem__(self, index: int, toy: Toy):
+        #Let box[index] = toy to replace a toy at that spot.
         self._toys[index] = toy
 
-    def __str__(self) -> str:
-        #Print the box and its toys.
-        inside = ", ".join(str(t) for t in self._toys) if self._toys else "(empty)"
-        return f"ToyBox[{inside}] (total_fun={self.total_fun()})"
+    def __str__(self):
+        #Print the box and its toys
+        return f"{self._toys } | fun={self.total_fun()}"
 
     def __eq__(self, other: object) -> bool:
-        """
-        Two boxes are equal if they have the same toys in the same order
-        (we use Toy.__eq__ to compare toys).
-        """
-        if not isinstance(other, ToyBox):
-            return NotImplemented
+        #Two boxes are equal if they have the same toys in the same order
         return self._toys == other._toys
 
-    def __lt__(self, other: "ToyBox") -> bool:
-        """
-        Which box is 'less'? We'll compare by total_fun.
-        This lets you sort boxes by how fun they are!
-        """
-        if not isinstance(other, ToyBox):
-            return NotImplemented
+    def __lt__(self, other: "ToyBox"):
+        # We'll compare by total_fun.
+        # This lets you sort boxes by how fun they are!
         return self.total_fun() < other.total_fun()
 
-    def __add__(self, other: "ToyBox") -> "ToyBox":
-        """
-        Add two boxes together to make a bigger box with all the toys.
-        (We keep order: first all of self, then all of other.)
-        """
-        if not isinstance(other, ToyBox):
-            return NotImplemented
+    def __add__(self, other: "ToyBox"):
+        #Add two boxes together to make a bigger box with all the toys.
         return ToyBox(self._toys + other._toys)
