@@ -17,14 +17,12 @@ class Toy:
     def __eq__(self, other):
         return self.name == other.name and self.color == other.color
 
-    # Compare toys by fun level (for sorting)
+    #compare toys by fun level (for sorting)
     def __lt__(self, other):
         return self.fun_level < other.fun_level
 
-    # Add two toys together to make a new combined toy
+    #add two toys together to make a new combined toy
     def __add__(self, other):
-        if not isinstance(other, Toy):
-            return False
         new_name = f"{self.name}+{other.name}"  # combine names
         new_color = "mixed"                     # set new color
         new_fun = self.fun_level + other.fun_level
