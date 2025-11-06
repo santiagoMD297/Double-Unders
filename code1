@@ -1,0 +1,96 @@
+from sys import setdlopenflags
+from typing import NamedTuple
+import random
+
+class Card(NamedTuple):
+    rank: str
+    suit: str
+
+    def __eq__(self, othercard):
+
+        if self.rank == othercard.rank and self.suit == othercard.suit:
+          return True
+
+        return False
+
+    def __lt__(self, otherCard):
+        # create a list of the order of the cards
+        order = []
+        for val in range(2, 11):
+            order.append(str(val))
+        order += ["J", "Q", "K", "A"]
+        
+        return order.index(self.rank) < order.index(otherCard.rank)
+        
+class Deck:
+
+    def __init__(self):
+        self.card_list = []
+
+        # For the 4 suits
+        for suit in "HDCS":
+
+            # Create all the 2-10 cards
+            for rank in range(2, 11):
+                c = Card(str(rank), suit)
+                self.card_list.append(c)
+            
+            # Create the face cards
+            for rank in "JQKA":
+                c = Card(rank, suit)
+                self.card_list.append(c)
+    
+    def __str__(self):
+        outS = []
+        
+        for card in self.card_list:
+            outS.append(card.rank + card.suit)
+
+        return ", ".join(outS)
+    
+    def __getitem__(self, x):
+        return self.card_list[x]
+
+    def __iter__(self):
+        return self
+
+    def __len__(self):
+        return len(self.card_list)
+    
+    def top(self):
+        return self[0]
+
+    def bottom(self):
+        return self.card_list[-1]
+
+    def get_n(self, n):
+        return self[n]
+
+    def get_random(self):
+        '''
+        i = random.randint(0, len(self.card_list))
+
+        return self.get_n(i)
+        '''
+        return random.choice(self.card_list)
+    
+    def shuffle(self):
+        random.shuffle(self.card_list)
+
+    def get_stack(self, start, end):
+        '''
+        Return a list of cards from location start to         location end
+        '''
+        return self[start: end+1]
+
+
+
+thedeck = Deck()
+
+print("")
+print("THE DECK")
+print(thedeck)
+print(thedeck.get_stack(1,5))
+
+mycard = Card("3", "D")
+print(mycard)
